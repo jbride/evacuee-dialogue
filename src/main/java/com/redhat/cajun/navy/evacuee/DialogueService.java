@@ -4,10 +4,13 @@ import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+import io.smallrye.mutiny.Uni;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,6 +28,10 @@ public class DialogueService {
     @Inject
     @ConfigProperty(name = TWILIO_TEST_TO_PHONE_NUMBER)
     String testToPhoneNumber;
+
+    @Inject
+    @RestClient
+    IncidentClient incidentClient;
 
     void onStart(@Observes StartupEvent ev) {
 
@@ -46,6 +53,12 @@ public class DialogueService {
 
     public String sanityCheck() {
         return smsProducer.sendMessage(testToPhoneNumber, "sanity check");
+    }
+
+    public void createIncident() {
+        Incident incident = new Incident();
+        Uni<Response> response = incidentClient.createIncident(incident);
+        logger.info("createIncident() response = "+response);
     }
 
 }
