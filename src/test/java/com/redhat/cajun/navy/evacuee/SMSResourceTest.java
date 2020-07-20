@@ -12,10 +12,10 @@ public class SMSResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
-          .when().get("/smsconsume")
+          .when().get("/sms/sanity")
           .then()
              .statusCode(200)
-             .body(is("hello"));
+             .body(is("good to go"));
     }
 
 }

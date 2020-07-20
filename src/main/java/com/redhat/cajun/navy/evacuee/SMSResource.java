@@ -23,9 +23,17 @@ public class SMSResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/sanity")
     public Response sanityCheck() {
+        return Response.ok("good to go").build();
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/smsSanity")
+    public Response smsSanityCheck() {
         String sid = dialogueService.sanityCheck();
         return Response.ok(sid).build();
     }
+
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)

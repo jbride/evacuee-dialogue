@@ -5,3 +5,6 @@ er.demo.TWILIO_TEST_TO_PHONE_NUMBER=
 
 quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
 quarkus.log.console.color=false
+
+com.redhat.cajun.navy.evacuee.IncidentClient/mp-rest/url=http://localhost:8080
+com.redhat.cajun.navy.evacuee.IncidentClient/mp-rest/scope=javax.enterprise.context.ApplicationScoped
