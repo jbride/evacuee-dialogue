@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.inject.Inject;
 
+import io.vertx.core.json.Json;
+
 @Path("/sms")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,8 +31,9 @@ public class SMSResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/createIncident")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createIncident() {
-        dialogueService.createIncident();
+    public Response createIncident(String incidentS) {
+        Incident iObj = Json.decodeValue(incidentS, Incident.class);
+        dialogueService.createIncident(iObj);
         return Response.ok().build();
     }
 }

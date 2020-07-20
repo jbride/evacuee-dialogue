@@ -15,7 +15,7 @@ import io.smallrye.mutiny.Uni;
 public interface IncidentClient {
 
     @POST
-    @Path("/incident")
+    @Path("/incidents")
     @Consumes(MediaType.APPLICATION_JSON)
     Uni<Response> createIncident(Incident incident);
 

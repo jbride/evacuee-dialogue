@@ -55,9 +55,8 @@ public class DialogueService {
         return smsProducer.sendMessage(testToPhoneNumber, "sanity check");
     }
 
-    public void createIncident() {
-        Incident incident = new Incident();
-        Uni<Response> response = incidentClient.createIncident(incident);
+    public void createIncident(Incident iObj) {
+        Uni<Response> response = incidentClient.createIncident(iObj);
         logger.info("createIncident() response = "+response);
     }
 
