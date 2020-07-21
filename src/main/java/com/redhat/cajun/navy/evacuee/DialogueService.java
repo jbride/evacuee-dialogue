@@ -56,7 +56,7 @@ public class DialogueService {
     }
 
     public void createIncident(Incident iObj) {
-        Uni<Response> response = incidentClient.createIncident(iObj);
+        String response = incidentClient.createIncident(iObj);
         logger.info("createIncident() response = "+response);
     }
 

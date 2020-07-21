@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import io.smallrye.mutiny.Uni;
 
 @Path("")
 @RegisterRestClient
@@ -17,6 +16,6 @@ public interface IncidentClient {
     @POST
     @Path("/incidents")
     @Consumes(MediaType.APPLICATION_JSON)
-    Uni<Response> createIncident(Incident incident);
+    String createIncident(Incident incident);
 
 }
