@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import com.twilio.twiml.MessagingResponse;
 import com.twilio.twiml.messaging.Body;
 import com.twilio.twiml.messaging.Message;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,11 +71,20 @@ public class SMSResource {
     public Response consumeSMS(@Context HttpServletRequest request) throws IOException
     {
         String requestString = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        logger.info("consumeSMS() requestBody = "+requestString);
+        if(requestString != null){
+            String requestDecoded = URLDecoder.decode(requestString, "UTF-8");
+            logger.info("consumeSMS() requestDecoded = "+requestDecoded);
+    
+            for(String param : requestDecoded.split("&")){
+                String key = StringUtils.substringBefore(param, "=");
+                String value = StringUtils.substringAfter(param, "=");
+                logger.info("consumeSMS body key = "+key+" : value = "+value);
+            }
+        }
 
-        Map<String, String[]> requestMap = request.getParameterMap();
-        for(String key : requestMap.keySet()){
-            logger.info("consumeSMS() request key = "+ key+ " : value = "+Arrays.toString(requestMap.get(key)));
+        Map<String, String[]> requestParamsMap = request.getParameterMap();
+        for(String key : requestParamsMap.keySet()){
+            logger.info("consumeSMS() params key = "+ key+ " : value = "+Arrays.toString(requestParamsMap.get(key)));
         }
 
         Body body = new Body
