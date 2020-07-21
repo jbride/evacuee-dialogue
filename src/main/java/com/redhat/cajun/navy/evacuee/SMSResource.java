@@ -10,6 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -67,7 +69,12 @@ public class SMSResource {
     public Response consumeSMS(@Context HttpServletRequest request) throws IOException
     {
         String requestString = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        logger.info("consumeSMS() sms = "+requestString);
+        logger.info("consumeSMS() requestBody = "+requestString);
+
+        Map<String, String[]> requestMap = request.getParameterMap();
+        for(String key : requestMap.keySet()){
+            logger.info("consumeSMS() request key = "+ key+ " : value = "+Arrays.toString(requestMap.get(key)));
+        }
 
         Body body = new Body
             .Builder("The Robots are coming! Head for the hills!")
