@@ -56,11 +56,11 @@ public class SMSResource {
 
     @POST
     @Produces(MediaType.APPLICATION_XML)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     @Path("/")
     public Response consumeSMS(String sms) {
         logger.info("consumeSMS() sms = "+sms);
-        
+
         Body body = new Body
             .Builder("The Robots are coming! Head for the hills!")
             .build();
