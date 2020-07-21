@@ -1,48 +1,38 @@
 package com.redhat.cajun.navy.evacuee;
 
-import java.time.Instant;
+import java.math.BigDecimal;
 
 public class Incident {
 
-    private long id;
-    private String incidentId;
-    private String latitude;
-    private String longitude;
+    private String id;
+    private BigDecimal lat;
+    private BigDecimal lon;
     private int numberOfPeople;
     private boolean medicalNeeded;
+    private long timestamp;
     private String victimName;
     private String victimPhoneNumber;
-    private Instant reportedTime;
     private String status;
-    private long version;
     private String sentimentData;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public String getIncidentId() {
-        return incidentId;
+    public BigDecimal getLat() {
+        return lat;
     }
 
-    public void setIncidentId(String incidentId) {
-        this.incidentId = incidentId;
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public BigDecimal getLon() {
+        return lon;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setLon(BigDecimal lon) {
+        this.lon = lon;
     }
 
     public Integer getNumberOfPeople() {
@@ -78,15 +68,11 @@ public class Incident {
     }
 
     public long getTimestamp() {
-        return reportedTime.toEpochMilli();
+        return timestamp;
     }
 
-    public Instant getReportedTime() {
-        return reportedTime;
-    }
-
-    public void setReportedTime(Instant reportedTime) {
-        this.reportedTime = reportedTime;
+    public void setTimestamp(long x) {
+        this.timestamp = x;
     }
 
     public String getStatus() {
@@ -95,10 +81,6 @@ public class Incident {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public long getVersion() {
-        return version;
     }
 
     public String getSentimentData() {
