@@ -31,9 +31,9 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-        <groupId>com.twilio.sdk</groupId>
-        <artifactId>twilio</artifactId>
-        <version>7.53.0</version>
+      <groupId>com.twilio.sdk</groupId>
+      <artifactId>twilio</artifactId>
+      <version>7.53.0</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -61,6 +61,10 @@
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-metrics</artifactId>
     </dependency>
   </dependencies>
   <build>
