@@ -5,9 +5,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.io.IOException;
+import java.util.stream.Collectors;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import io.vertx.core.json.Json;
 
@@ -56,10 +62,12 @@ public class SMSResource {
 
     @POST
     @Produces(MediaType.APPLICATION_XML)
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/")
-    public Response consumeSMS(String sms) {
-        logger.info("consumeSMS() sms = "+sms);
+    public Response consumeSMS(@Context HttpServletRequest request) throws IOException
+    {
+        String requestString = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        logger.info("consumeSMS() sms = "+requestString);
 
         Body body = new Body
             .Builder("The Robots are coming! Head for the hills!")
