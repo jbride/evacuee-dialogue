@@ -3,6 +3,13 @@ er.demo.TWILIO_AUTH_TOKEN=
 er.demo.TWILIO_FROM_PHONE_NUMBER=
 er.demo.TWILIO_TEST_TO_PHONE_NUMBER=
 
+# Valid values:
+#  simple    (simple java implementation)
+#  nlp       (natural language processing implementation)
+er.demo.evacuee.dialogue.type=simple
+
+er.demo.evacuee.volunteer.hotline=+1555-555-5555
+
 quarkus.log.console.format=%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n
 quarkus.log.console.color=false
 

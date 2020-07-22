@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -36,21 +37,13 @@ public class SMSResource {
     private static final Logger logger = LoggerFactory.getLogger(SMSResource.class);
 
     @Inject
-    DialogueService dialogueService;
+    EvacueeDialogueService dialogueService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/sanity")
     public Response sanityCheck() {
         return Response.ok("good to go").build();
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/smsSanity")
-    public Response smsSanityCheck() {
-        String sid = dialogueService.sanityCheck();
-        return Response.ok(sid).build();
     }
 
 
@@ -68,27 +61,33 @@ public class SMSResource {
     @Produces(MediaType.APPLICATION_XML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/")
-    public Response consumeSMS(@Context HttpServletRequest request) throws IOException
-    {
+    public Response smRequestResponse(@Context HttpServletRequest request) throws IOException {
+    
+
+        Map<String, String> requestMap = new HashMap<String, String>();
         String requestString = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         if(requestString != null){
             String requestDecoded = URLDecoder.decode(requestString, "UTF-8");
-            logger.info("consumeSMS() requestDecoded = "+requestDecoded);
+            logger.debug("consumeSMS() requestDecoded = "+requestDecoded);
     
             for(String param : requestDecoded.split("&")){
                 String key = StringUtils.substringBefore(param, "=");
                 String value = StringUtils.substringAfter(param, "=");
-                logger.info("consumeSMS body key = "+key+" : value = "+value);
+                logger.debug("consumeSMS body key = "+key+" : value = "+value);
+                requestMap.put(key, value);
             }
         }
 
         Map<String, String[]> requestParamsMap = request.getParameterMap();
         for(String key : requestParamsMap.keySet()){
-            logger.info("consumeSMS() params key = "+ key+ " : value = "+Arrays.toString(requestParamsMap.get(key)));
+            logger.debug("consumeSMS() params key = "+ key+ " : value = "+Arrays.toString(requestParamsMap.get(key)));
+            requestMap.put(key, Arrays.toString(requestParamsMap.get(key)));
         }
 
+        String responseString = dialogueService.evacueeDialogeRequestResponse(requestMap);
+
         Body body = new Body
-            .Builder("The Robots are coming! Head for the hills!")
+            .Builder(responseString)
             .build();
         Message responseBody = new Message
             .Builder()

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class Incident {
 
+    public static final int maxPeople = 50;
+
     private String id;
     private BigDecimal lat;
     private BigDecimal lon;
