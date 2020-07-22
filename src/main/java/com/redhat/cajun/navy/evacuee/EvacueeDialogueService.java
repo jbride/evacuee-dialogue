@@ -57,7 +57,6 @@ public class EvacueeDialogueService {
     @Inject
     io.vertx.mutiny.core.Vertx vertx;
 
-
     void onStart(@Observes StartupEvent ev) {
 
         System.out.println("              _   _            _____    _____           ");
